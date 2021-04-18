@@ -8,11 +8,19 @@ class App extends Component {
     this.props.fetchCats();
   }
 
+  handleLoading = () => {
+    if (this.props.loading) {
+      return <div>Loading...</div>
+    } else {
+      return <CatList catPics={this.props.catPics} />
+    }
+  }
+
   render() {
     return (
       <div>
         <h1>CatBook</h1>
-        <CatList catPics={this.props.catPics} />
+        {this.handleLoading()}
       </div>
     );
   }
@@ -25,10 +33,4 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchCats: () => dispatch(fetchCats())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, { fetchCats })(App);
